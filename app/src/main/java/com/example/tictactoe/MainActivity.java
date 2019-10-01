@@ -2,6 +2,7 @@ package com.example.tictactoe;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -10,6 +11,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
+import android.widget.Chronometer;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -24,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
 
     private TextView textViewPlayer1;
     private TextView textViewPlayer2;
+    private Chronometer timer;
     private Animation flip, clear;
 
     @Override
@@ -35,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
 
         textViewPlayer1 = findViewById(R.id.textView);
         textViewPlayer2 = findViewById(R.id.textView2);
+        timer = findViewById(R.id.timer);
 
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
@@ -49,6 +53,8 @@ public class MainActivity extends AppCompatActivity {
 
         ImageButton buttonReset = findViewById(R.id.image_button);
         buttonReset.setOnClickListener(v -> resetGame());
+
+        timer.start();
     }
 
     private void buttonPressed(View view) {
@@ -86,6 +92,8 @@ public class MainActivity extends AppCompatActivity {
         player2Points = 0;
         updatePointsText();
         resetBoard();
+
+        timer.setBase(SystemClock.elapsedRealtime());
     }
 
 
