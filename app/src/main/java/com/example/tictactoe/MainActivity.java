@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -50,15 +51,15 @@ public class MainActivity extends AppCompatActivity {
 
                         if (player1Turn) {
                             ((Button) view).setText("X");
-                            //Typeface custom_font = Typeface.createFromAsset(getAssets(),  "font/tictactoefont.ttf");
-                            //((Button) view).setTypeface(custom_font);
-                           // ((Button) view).setTextColor(R.color.XColor);
+                            AlphaAnimation fadeIn = new AlphaAnimation(0.0f , 1.0f );
+                            (view).startAnimation(fadeIn);
+                            fadeIn.setDuration(500);
                             ((Button) view).setTextColor(Color.parseColor("#490080"));
                         } else {
                             ((Button) view).setText("O");
-                            //Typeface custom_font = Typeface.createFromAsset(getAssets(),  "font/tictactoefont.ttf");
-                            //((Button) view).setTypeface(custom_font);
-                           // ((Button) view).setTextColor(R.color.OColor);
+                            AlphaAnimation fadeIn = new AlphaAnimation(0.0f , 1.0f );
+                            (view).startAnimation(fadeIn);
+                            fadeIn.setDuration(500);
                             ((Button) view).setTextColor(Color.parseColor("#240040"));
                         }
 
