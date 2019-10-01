@@ -2,13 +2,17 @@ package com.example.tictactoe;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.DrawableRes;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
@@ -127,20 +131,20 @@ public class MainActivity extends AppCompatActivity {
 
     private void player1Wins() {
         player1Points++;
-        Toast.makeText(this, "Player One wins :) ", Toast.LENGTH_SHORT).show();
+        showToastMessage("Player one won", R.drawable.thumbs_up);
         updatePointsText();
         resetBoard();
     }
 
     private void player2Wins() {
         player2Points++;
-        Toast.makeText(this, "Player Two wins :) ", Toast.LENGTH_SHORT).show();
+        showToastMessage("Player two won", R.drawable.thumbs_up);
         updatePointsText();
         resetBoard();
     }
 
     private void draw() {
-        Toast.makeText(this, "Draw :(", Toast.LENGTH_SHORT).show();
+        showToastMessage("Draw", R.drawable.draw);
         resetBoard();
     }
 
@@ -159,5 +163,21 @@ public class MainActivity extends AppCompatActivity {
 
         roundCount = 0;
         player1Turn = true;
+    }
+
+    private void showToastMessage(String message, @DrawableRes int icon) {
+        LayoutInflater inflater = getLayoutInflater();
+        View layout = inflater.inflate(R.layout.toast,
+                findViewById(R.id.toast_layout_root));
+
+        ImageView image =  layout.findViewById(R.id.image);
+        image.setImageResource(icon);
+        TextView text =  layout.findViewById(R.id.text);
+        text.setText(message);
+
+        Toast toast = new Toast(getApplicationContext());
+        toast.setDuration(Toast.LENGTH_SHORT);
+        toast.setView(layout);
+        toast.show();
     }
 }
