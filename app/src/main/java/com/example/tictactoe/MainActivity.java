@@ -159,8 +159,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void updatePointsText() {
-        textViewPlayer1.setText("Player One - " + player1Points);
-        textViewPlayer2.setText("Player Two - " + player2Points);
+        textViewPlayer1.setText(player1Points + "");
+        textViewPlayer2.setText(player2Points + "");
     }
 
     private void resetBoard() {
