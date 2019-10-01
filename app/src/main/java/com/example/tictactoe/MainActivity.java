@@ -1,16 +1,17 @@
 package com.example.tictactoe;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
+import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -25,10 +26,13 @@ public class MainActivity extends AppCompatActivity {
 
     private TextView textViewPlayer1;
     private TextView textViewPlayer2;
+    private Animation flip, clear;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        flip = AnimationUtils.loadAnimation(this, R.anim.rotate);
+        clear = AnimationUtils.loadAnimation(this, R.anim.clear);
         setContentView(R.layout.activity_main);
 
         textViewPlayer1 = findViewById(R.id.textView);
@@ -39,57 +43,44 @@ public class MainActivity extends AppCompatActivity {
                 String buttonID = "button_" + i + j;
                 int resID = getResources().getIdentifier(buttonID, "id", getPackageName());
                 buttons[i][j] = findViewById(resID);
-              //  buttons[i][j].setOnClickListener((View.OnClickListener) this);
 
-                buttons[i][j].setOnClickListener(new View.OnClickListener() {
-
-                    @Override
-                    public void onClick(View view) {
-                        if (!(((Button) view).getText().toString().equals(""))) {
-                            return;
-                        }
-
-                        if (player1Turn) {
-                            ((Button) view).setText("X");
-                            AlphaAnimation fadeIn = new AlphaAnimation(0.0f , 1.0f );
-                            (view).startAnimation(fadeIn);
-                            fadeIn.setDuration(500);
-                            ((Button) view).setTextColor(Color.parseColor("#490080"));
-                        } else {
-                            ((Button) view).setText("O");
-                            AlphaAnimation fadeIn = new AlphaAnimation(0.0f , 1.0f );
-                            (view).startAnimation(fadeIn);
-                            fadeIn.setDuration(500);
-                            ((Button) view).setTextColor(Color.parseColor("#240040"));
-                        }
-
-                        roundCount++;
-
-                        if (checkForWin()) {
-                            if (player1Turn) {
-                                player1Wins();
-                            } else {
-                                player2Wins();
-                            }
-                        } else if (roundCount == 9) {
-                            draw();
-                        } else {
-                            player1Turn = !player1Turn;
-                        }
-                    }
-                });
+                buttons[i][j].setOnClickListener(this::buttonPressed);
             }
         }
 
-       ImageButton buttonReset = findViewById(R.id.image_button);
-        buttonReset.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-            resetGame();
-            }
-        });
+        ImageButton buttonReset = findViewById(R.id.image_button);
+        buttonReset.setOnClickListener(v -> resetGame());
     }
 
+    private void buttonPressed(View view) {
+        if (!(((Button) view).getText().toString().equals(""))) {
+            return;
+        }
+        view.startAnimation(flip);
+        if (player1Turn) {
+            ((Button) view).setText("X");
+            // ((Button) view).setTextColor(R.color.XColor);
+            ((Button) view).setTextColor(Color.parseColor("#490080"));
+        } else {
+            ((Button) view).setText("O");
+            // ((Button) view).setTextColor(R.color.OColor);
+            ((Button) view).setTextColor(Color.parseColor("#240040"));
+        }
+
+        roundCount++;
+
+        if (checkForWin()) {
+            if (player1Turn) {
+                player1Wins();
+            } else {
+                player2Wins();
+            }
+        } else if (roundCount == 9) {
+            draw();
+        } else {
+            player1Turn = !player1Turn;
+        }
+    }
 
     private void resetGame() {
         player1Points = 0;
@@ -97,7 +88,6 @@ public class MainActivity extends AppCompatActivity {
         updatePointsText();
         resetBoard();
     }
-
 
 
     private boolean checkForWin() {
@@ -131,13 +121,9 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
 
-        if (field[0][2].equals(field[1][1])
+        return field[0][2].equals(field[1][1])
                 && field[0][2].equals(field[2][0])
-                && !field[0][2].equals("")) {
-            return true;
-        }
-
-        return false;
+                && !field[0][2].equals("");
     }
 
     private void player1Wins() {
@@ -168,6 +154,7 @@ public class MainActivity extends AppCompatActivity {
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 buttons[i][j].setText("");
+                buttons[i][j].startAnimation(clear);
             }
         }
 
