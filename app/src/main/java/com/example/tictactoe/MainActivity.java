@@ -3,6 +3,7 @@ package com.example.tictactoe;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -49,12 +50,16 @@ public class MainActivity extends AppCompatActivity {
 
                         if (player1Turn) {
                             ((Button) view).setText("X");
+                            //Typeface custom_font = Typeface.createFromAsset(getAssets(),  "font/tictactoefont.ttf");
+                            //((Button) view).setTypeface(custom_font);
                            // ((Button) view).setTextColor(R.color.XColor);
-                            ((Button) view).setTextColor(Color.parseColor("#3A98D4"));
+                            ((Button) view).setTextColor(Color.parseColor("#490080"));
                         } else {
                             ((Button) view).setText("O");
+                            //Typeface custom_font = Typeface.createFromAsset(getAssets(),  "font/tictactoefont.ttf");
+                            //((Button) view).setTypeface(custom_font);
                            // ((Button) view).setTextColor(R.color.OColor);
-                            ((Button) view).setTextColor(Color.parseColor("#79CADC"));
+                            ((Button) view).setTextColor(Color.parseColor("#240040"));
                         }
 
                         roundCount++;
