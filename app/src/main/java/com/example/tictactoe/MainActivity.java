@@ -2,16 +2,28 @@ package com.example.tictactoe;
 
 import android.graphics.Color;
 import android.os.Bundle;
+
 import android.os.SystemClock;
+
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+
+import androidx.annotation.DrawableRes;
+
 import androidx.appcompat.app.AppCompatActivity;
 import android.widget.Chronometer;
+
+import java.util.Locale;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -23,6 +35,10 @@ public class MainActivity extends AppCompatActivity {
 
     private int player1Points;
     private int player2Points;
+
+    private Timer timer;
+    private int time = 0;
+    private TextView textViewTimer;
 
     private TextView textViewPlayer1;
     private TextView textViewPlayer2;
@@ -38,14 +54,16 @@ public class MainActivity extends AppCompatActivity {
 
         textViewPlayer1 = findViewById(R.id.textView);
         textViewPlayer2 = findViewById(R.id.textView2);
+
         timer = findViewById(R.id.timer);
+
 
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 String buttonID = "button_" + i + j;
                 int resID = getResources().getIdentifier(buttonID, "id", getPackageName());
                 buttons[i][j] = findViewById(resID);
-                //  buttons[i][j].setOnClickListener((View.OnClickListener) this);
+                // buttons[i][j].setOnClickListener((View.OnClickListener) this);
 
                 buttons[i][j].setOnClickListener(this::buttonPressed);
             }
@@ -58,6 +76,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void buttonPressed(View view) {
+        if (time == 0) {
+            startTimeer();
+        }
+
         if (!(((Button) view).getText().toString().equals(""))) {
             return;
         }
@@ -77,11 +99,14 @@ public class MainActivity extends AppCompatActivity {
         if (checkForWin()) {
             if (player1Turn) {
                 player1Wins();
+
             } else {
                 player2Wins();
+
             }
         } else if (roundCount == 9) {
             draw();
+
         } else {
             player1Turn = !player1Turn;
         }
@@ -93,7 +118,14 @@ public class MainActivity extends AppCompatActivity {
         updatePointsText();
         resetBoard();
 
+
         timer.setBase(SystemClock.elapsedRealtime());
+
+        timer.cancel();
+        timer.purge();
+        time = 0;
+       
+
     }
 
 
@@ -135,21 +167,33 @@ public class MainActivity extends AppCompatActivity {
 
     private void player1Wins() {
         player1Points++;
-        Toast.makeText(this, "Player One wins :) ", Toast.LENGTH_SHORT).show();
+        showToastMessage("Player one won", R.drawable.thumbs_up);
         updatePointsText();
         resetBoard();
+        timer.cancel();
+        timer.purge();
+        time = 0;
+        textViewTimer.setText(String.valueOf(time));
     }
 
     private void player2Wins() {
         player2Points++;
-        Toast.makeText(this, "Player Two wins :) ", Toast.LENGTH_SHORT).show();
+        showToastMessage("Player two won", R.drawable.thumbs_up);
         updatePointsText();
         resetBoard();
+        timer.cancel();
+        timer.purge();
+        time = 0;
+        textViewTimer.setText(String.valueOf(time));
     }
 
     private void draw() {
-        Toast.makeText(this, "Draw :(", Toast.LENGTH_SHORT).show();
+        showToastMessage("Draw", R.drawable.draw);
         resetBoard();
+        timer.cancel();
+        timer.purge();
+        time = 0;
+        textViewTimer.setText(String.valueOf(time));
     }
 
     private void updatePointsText() {
@@ -167,5 +211,40 @@ public class MainActivity extends AppCompatActivity {
 
         roundCount = 0;
         player1Turn = true;
+    }
+
+
+    private void showToastMessage(String message, @DrawableRes int icon) {
+        LayoutInflater inflater = getLayoutInflater();
+        View layout = inflater.inflate(R.layout.toast,
+                findViewById(R.id.toast_layout_root));
+
+        ImageView image =  layout.findViewById(R.id.image);
+        image.setImageResource(icon);
+        TextView text =  layout.findViewById(R.id.text);
+        text.setText(message);
+
+        Toast toast = new Toast(getApplicationContext());
+        toast.setDuration(Toast.LENGTH_SHORT);
+        toast.setView(layout);
+        toast.show();
+
+    public void startTimeer() {
+        timer = new Timer();
+        TimerTask timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        textViewTimer.setText(String.format(Locale.getDefault(), "%d", time));
+
+                        time += 1;
+                    }
+                });
+            }
+        };
+        timer.scheduleAtFixedRate(timerTask, 0, 1000);
+
     }
 }
