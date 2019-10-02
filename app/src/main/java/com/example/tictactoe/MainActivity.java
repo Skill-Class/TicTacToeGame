@@ -1,5 +1,7 @@
 package com.example.tictactoe;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 
@@ -29,6 +31,14 @@ import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final String EXTRA_PLAYER_1_SYMBOL = "Player1Symbol";
+
+    public static void start(final Activity activity, final String player1Symbol) {
+        final Intent intent = new Intent(activity, MainActivity.class);
+        intent.putExtra(EXTRA_PLAYER_1_SYMBOL, player1Symbol);
+        activity.startActivity(intent);
+    }
+
     private Button[][] buttons = new Button[3][3];
 
     private boolean player1Turn = true;
@@ -49,12 +59,21 @@ public class MainActivity extends AppCompatActivity {
  //   private Chronometer timerr;
     private Animation flip, clear;
 
+    private String player1Symbol = "X";
+    private String player2Symbol = "O";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         flip = AnimationUtils.loadAnimation(this, R.anim.rotate);
         clear = AnimationUtils.loadAnimation(this, R.anim.clear);
         setContentView(R.layout.activity_main);
+
+        final String chosenPlayer1Symbol = getIntent().getStringExtra(EXTRA_PLAYER_1_SYMBOL);
+        if("O".equals(chosenPlayer1Symbol)) {
+            player1Symbol = "O";
+            player2Symbol = "X";
+        }
 
         textViewPlayer1 = findViewById(R.id.textView);
         textViewPlayer2 = findViewById(R.id.textView2);
@@ -93,6 +112,12 @@ public class MainActivity extends AppCompatActivity {
         }.start();
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        countDownTimer.cancel();
+    }
+
     private void buttonPressed(View view) {
 
 
@@ -101,11 +126,11 @@ public class MainActivity extends AppCompatActivity {
         }
         view.startAnimation(flip);
         if (player1Turn) {
-            ((Button) view).setText("X");
+            ((Button) view).setText(player1Symbol);
             // ((Button) view).setTextColor(R.color.XColor);
             ((Button) view).setTextColor(Color.parseColor("#3A98D4"));
         } else {
-            ((Button) view).setText("O");
+            ((Button) view).setText(player2Symbol);
             // ((Button) view).setTextColor(R.color.OColor);
             ((Button) view).setTextColor(Color.parseColor("#79CADC"));
         }
