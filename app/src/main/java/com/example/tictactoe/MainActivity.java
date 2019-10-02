@@ -12,8 +12,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
 import androidx.annotation.DrawableRes;
+
 import androidx.appcompat.app.AppCompatActivity;
+
+import java.util.Locale;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -25,6 +31,10 @@ public class MainActivity extends AppCompatActivity {
 
     private int player1Points;
     private int player2Points;
+
+    private Timer timer;
+    private int time = 0;
+    private TextView textViewTimer;
 
     private TextView textViewPlayer1;
     private TextView textViewPlayer2;
@@ -39,13 +49,14 @@ public class MainActivity extends AppCompatActivity {
 
         textViewPlayer1 = findViewById(R.id.textView);
         textViewPlayer2 = findViewById(R.id.textView2);
+        textViewTimer = findViewById(R.id.textViewTimer);
 
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 String buttonID = "button_" + i + j;
                 int resID = getResources().getIdentifier(buttonID, "id", getPackageName());
                 buttons[i][j] = findViewById(resID);
-                //  buttons[i][j].setOnClickListener((View.OnClickListener) this);
+                // buttons[i][j].setOnClickListener((View.OnClickListener) this);
 
                 buttons[i][j].setOnClickListener(this::buttonPressed);
             }
@@ -56,6 +67,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void buttonPressed(View view) {
+        if (time == 0) {
+            startTimeer();
+        }
+
         if (!(((Button) view).getText().toString().equals(""))) {
             return;
         }
@@ -75,11 +90,14 @@ public class MainActivity extends AppCompatActivity {
         if (checkForWin()) {
             if (player1Turn) {
                 player1Wins();
+
             } else {
                 player2Wins();
+
             }
         } else if (roundCount == 9) {
             draw();
+
         } else {
             player1Turn = !player1Turn;
         }
@@ -90,6 +108,10 @@ public class MainActivity extends AppCompatActivity {
         player2Points = 0;
         updatePointsText();
         resetBoard();
+        timer.cancel();
+        timer.purge();
+        time = 0;
+        textViewTimer.setText(String.valueOf(time));
     }
 
 
@@ -134,6 +156,10 @@ public class MainActivity extends AppCompatActivity {
         showToastMessage("Player one won", R.drawable.thumbs_up);
         updatePointsText();
         resetBoard();
+        timer.cancel();
+        timer.purge();
+        time = 0;
+        textViewTimer.setText(String.valueOf(time));
     }
 
     private void player2Wins() {
@@ -141,11 +167,19 @@ public class MainActivity extends AppCompatActivity {
         showToastMessage("Player two won", R.drawable.thumbs_up);
         updatePointsText();
         resetBoard();
+        timer.cancel();
+        timer.purge();
+        time = 0;
+        textViewTimer.setText(String.valueOf(time));
     }
 
     private void draw() {
         showToastMessage("Draw", R.drawable.draw);
         resetBoard();
+        timer.cancel();
+        timer.purge();
+        time = 0;
+        textViewTimer.setText(String.valueOf(time));
     }
 
     private void updatePointsText() {
@@ -165,6 +199,7 @@ public class MainActivity extends AppCompatActivity {
         player1Turn = true;
     }
 
+
     private void showToastMessage(String message, @DrawableRes int icon) {
         LayoutInflater inflater = getLayoutInflater();
         View layout = inflater.inflate(R.layout.toast,
@@ -179,5 +214,23 @@ public class MainActivity extends AppCompatActivity {
         toast.setDuration(Toast.LENGTH_SHORT);
         toast.setView(layout);
         toast.show();
+
+    public void startTimeer() {
+        timer = new Timer();
+        TimerTask timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        textViewTimer.setText(String.format(Locale.getDefault(), "%d", time));
+
+                        time += 1;
+                    }
+                });
+            }
+        };
+        timer.scheduleAtFixedRate(timerTask, 0, 1000);
+
     }
 }
