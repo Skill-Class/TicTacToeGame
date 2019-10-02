@@ -3,7 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="#D6E6EA"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
@@ -39,7 +38,6 @@
         android:id="@+id/timerLayout"
         android:layout_width="280dp"
         android:layout_height="65dp"
-        android:background="#D6E6EA"
         android:padding="10dp"
         tools:layout_editor_absoluteX="66dp"
         tools:layout_editor_absoluteY="98dp"
@@ -66,7 +64,6 @@
         android:id="@+id/constraintLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="#D6E6EA"
         android:padding="10dp"
         app:layout_constraintBottom_toTopOf="@+id/constraintLayout2"
         app:layout_constraintEnd_toEndOf="parent"

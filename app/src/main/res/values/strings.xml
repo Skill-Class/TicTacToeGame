@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">TicTacToe</string>
+    <string name="choose_symbol_message">Choose the symbol for player 1</string>
 </resources>
