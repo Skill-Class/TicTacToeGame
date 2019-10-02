@@ -7,6 +7,7 @@ import android.os.SystemClock;
 
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
@@ -36,13 +37,13 @@ public class MainActivity extends AppCompatActivity {
     private int player1Points;
     private int player2Points;
 
-    private Timer timer;
-    private int time = 0;
-    private TextView textViewTimer;
+  //  private Timer timer;
+ //   private int time = 0;
+
 
     private TextView textViewPlayer1;
     private TextView textViewPlayer2;
-    private Chronometer timer;
+ //   private Chronometer timerr;
     private Animation flip, clear;
 
     @Override
@@ -55,8 +56,7 @@ public class MainActivity extends AppCompatActivity {
         textViewPlayer1 = findViewById(R.id.textView);
         textViewPlayer2 = findViewById(R.id.textView2);
 
-        timer = findViewById(R.id.timer);
-
+     //   timerr = findViewById(R.id.timerID);
 
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
@@ -72,13 +72,11 @@ public class MainActivity extends AppCompatActivity {
         ImageButton buttonReset = findViewById(R.id.image_button);
         buttonReset.setOnClickListener(v -> resetGame());
 
-        timer.start();
+      //  timerr.start();
     }
 
     private void buttonPressed(View view) {
-        if (time == 0) {
-            startTimeer();
-        }
+
 
         if (!(((Button) view).getText().toString().equals(""))) {
             return;
@@ -112,6 +110,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+
     private void resetGame() {
         player1Points = 0;
         player2Points = 0;
@@ -119,11 +118,11 @@ public class MainActivity extends AppCompatActivity {
         resetBoard();
 
 
-        timer.setBase(SystemClock.elapsedRealtime());
+      //  timerr.setBase(SystemClock.elapsedRealtime());
 
-        timer.cancel();
-        timer.purge();
-        time = 0;
+      //  timer.cancel();
+      //  timer.purge();
+      //  time = 0;
        
 
     }
@@ -170,10 +169,10 @@ public class MainActivity extends AppCompatActivity {
         showToastMessage("Player one won", R.drawable.thumbs_up);
         updatePointsText();
         resetBoard();
-        timer.cancel();
-        timer.purge();
-        time = 0;
-        textViewTimer.setText(String.valueOf(time));
+      //  timer.cancel();
+      //  timer.purge();
+      //  time = 0;
+      //  textViewTimer.setText(String.valueOf(time));
     }
 
     private void player2Wins() {
@@ -181,19 +180,19 @@ public class MainActivity extends AppCompatActivity {
         showToastMessage("Player two won", R.drawable.thumbs_up);
         updatePointsText();
         resetBoard();
-        timer.cancel();
-        timer.purge();
-        time = 0;
-        textViewTimer.setText(String.valueOf(time));
+     //   timer.cancel();
+     //   timer.purge();
+      //  time = 0;
+       // textViewTimer.setText(String.valueOf(time));
     }
 
     private void draw() {
         showToastMessage("Draw", R.drawable.draw);
         resetBoard();
-        timer.cancel();
-        timer.purge();
-        time = 0;
-        textViewTimer.setText(String.valueOf(time));
+     //   timer.cancel();
+     //   timer.purge();
+
+
     }
 
     private void updatePointsText() {
@@ -217,11 +216,11 @@ public class MainActivity extends AppCompatActivity {
     private void showToastMessage(String message, @DrawableRes int icon) {
         LayoutInflater inflater = getLayoutInflater();
         View layout = inflater.inflate(R.layout.toast,
-                findViewById(R.id.toast_layout_root));
+                (ViewGroup) findViewById(R.id.toast_layout_root));
 
-        ImageView image =  layout.findViewById(R.id.image);
+        ImageView image = layout.findViewById(R.id.image);
         image.setImageResource(icon);
-        TextView text =  layout.findViewById(R.id.text);
+        TextView text = layout.findViewById(R.id.text);
         text.setText(message);
 
         Toast toast = new Toast(getApplicationContext());
@@ -229,22 +228,6 @@ public class MainActivity extends AppCompatActivity {
         toast.setView(layout);
         toast.show();
 
-    public void startTimeer() {
-        timer = new Timer();
-        TimerTask timerTask = new TimerTask() {
-            @Override
-            public void run() {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        textViewTimer.setText(String.format(Locale.getDefault(), "%d", time));
-
-                        time += 1;
-                    }
-                });
-            }
-        };
-        timer.scheduleAtFixedRate(timerTask, 0, 1000);
 
     }
 }
