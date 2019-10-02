@@ -21,6 +21,7 @@ import androidx.annotation.DrawableRes;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.widget.Chronometer;
+import android.os.CountDownTimer;
 
 import java.util.Locale;
 import java.util.Timer;
@@ -40,9 +41,11 @@ public class MainActivity extends AppCompatActivity {
   //  private Timer timer;
  //   private int time = 0;
 
+    private CountDownTimer countDownTimer;
 
     private TextView textViewPlayer1;
     private TextView textViewPlayer2;
+    private TextView timerView;
  //   private Chronometer timerr;
     private Animation flip, clear;
 
@@ -57,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
         textViewPlayer2 = findViewById(R.id.textView2);
 
      //   timerr = findViewById(R.id.timerID);
+        timerView = findViewById(R.id.timerID);
 
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
@@ -73,6 +77,20 @@ public class MainActivity extends AppCompatActivity {
         buttonReset.setOnClickListener(v -> resetGame());
 
       //  timerr.start();
+
+        countDownTimer = new CountDownTimer(15000, 1000) {
+
+            public void onTick(long millisUntilFinished) {
+                timerView.setText("seconds remaining: " + millisUntilFinished / 1000);
+            }
+
+            public void onFinish() {
+                showToastMessage("Timeout!",R.drawable.timer);
+                countDownTimer.cancel();
+                resetBoard();
+                countDownTimer.start();
+            }
+        }.start();
     }
 
     private void buttonPressed(View view) {
@@ -116,6 +134,8 @@ public class MainActivity extends AppCompatActivity {
         player2Points = 0;
         updatePointsText();
         resetBoard();
+        countDownTimer.cancel();
+        countDownTimer.start();
 
 
       //  timerr.setBase(SystemClock.elapsedRealtime());
@@ -169,6 +189,8 @@ public class MainActivity extends AppCompatActivity {
         showToastMessage("Player one won", R.drawable.thumbs_up);
         updatePointsText();
         resetBoard();
+        countDownTimer.cancel();
+        countDownTimer.start();
       //  timer.cancel();
       //  timer.purge();
       //  time = 0;
@@ -180,6 +202,8 @@ public class MainActivity extends AppCompatActivity {
         showToastMessage("Player two won", R.drawable.thumbs_up);
         updatePointsText();
         resetBoard();
+        countDownTimer.cancel();
+        countDownTimer.start();
      //   timer.cancel();
      //   timer.purge();
       //  time = 0;
@@ -189,6 +213,8 @@ public class MainActivity extends AppCompatActivity {
     private void draw() {
         showToastMessage("Draw", R.drawable.draw);
         resetBoard();
+        countDownTimer.cancel();
+        countDownTimer.start();
      //   timer.cancel();
      //   timer.purge();
 
