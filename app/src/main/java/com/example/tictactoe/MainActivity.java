@@ -15,6 +15,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.view.Gravity;
 
 
 import androidx.annotation.DrawableRes;
@@ -224,6 +225,7 @@ public class MainActivity extends AppCompatActivity {
         text.setText(message);
 
         Toast toast = new Toast(getApplicationContext());
+        toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
         toast.setDuration(Toast.LENGTH_SHORT);
         toast.setView(layout);
         toast.show();
