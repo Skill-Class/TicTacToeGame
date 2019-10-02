@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
                 String buttonID = "button_" + i + j;
                 int resID = getResources().getIdentifier(buttonID, "id", getPackageName());
                 buttons[i][j] = findViewById(resID);
-                //  buttons[i][j].setOnClickListener((View.OnClickListener) this);
+                // buttons[i][j].setOnClickListener((View.OnClickListener) this);
 
                 buttons[i][j].setOnClickListener(this::buttonPressed);
             }
