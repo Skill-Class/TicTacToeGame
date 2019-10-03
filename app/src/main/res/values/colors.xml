@@ -5,4 +5,5 @@
     <color name="colorAccent">#D81B60</color>
     <color name="XColor">#3A98D4</color>
     <color name="OColor">#79CADC</color>
+    <color name="backgroundColor">#FFD6E6EA</color>
 </resources>
