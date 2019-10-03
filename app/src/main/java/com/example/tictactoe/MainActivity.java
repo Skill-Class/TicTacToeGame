@@ -2,12 +2,9 @@ package com.example.tictactoe;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Color;
 import android.media.AudioManager;
 import android.media.SoundPool;
 import android.os.Bundle;
-
-import android.os.SystemClock;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,12 +21,9 @@ import android.widget.Toast;
 import androidx.annotation.DrawableRes;
 
 import androidx.appcompat.app.AppCompatActivity;
-import android.widget.Chronometer;
-import android.os.CountDownTimer;
+import androidx.appcompat.app.AppCompatDelegate;
 
-import java.util.Locale;
-import java.util.Timer;
-import java.util.TimerTask;
+import android.os.CountDownTimer;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -71,6 +65,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if (ThemeInitializer.getInstance().isNightModeEnabled(getApplicationContext())) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }
+
         flip = AnimationUtils.loadAnimation(this, R.anim.rotate);
         clear = AnimationUtils.loadAnimation(this, R.anim.clear);
         setContentView(R.layout.activity_main);
@@ -139,11 +140,11 @@ public class MainActivity extends AppCompatActivity {
         if (player1Turn) {
             ((Button) view).setText(player1Symbol);
             // ((Button) view).setTextColor(R.color.XColor);
-            ((Button) view).setTextColor(Color.parseColor("#3A98D4"));
+            ((Button) view).setTextColor(getResources().getColor(R.color.XColor));
         } else {
             ((Button) view).setText(player2Symbol);
             // ((Button) view).setTextColor(R.color.OColor);
-            ((Button) view).setTextColor(Color.parseColor("#79CADC"));
+            ((Button) view).setTextColor(getResources().getColor(R.color.OColor));
         }
 
         roundCount++;
@@ -293,4 +294,6 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
+
 }
