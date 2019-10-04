@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#D6E6EA"
     tools:context=".MainActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -15,6 +16,20 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <Button
+            android:id="@+id/addName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:text="Change name"
+            android:textSize="12sp"
+            android:background="#D6E6EA"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/textView"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <TextView
             android:id="@+id/textView"
             android:layout_width="wrap_content"
@@ -22,8 +37,9 @@
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
             android:fontFamily="@font/montserrat_bold"
-            android:text="Player One - 0"
-            android:textColor="@color/playerOneTextColor"
+
+            android:text="Player One"
+            android:textColor="#4A6884"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -76,12 +92,20 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
             android:layout_marginLeft="32dp"
+
+            android:background="#f0f0f0"
+            android:elevation="2dp"
+
             android:textSize="60sp"
             android:textStyle="bold"
             android:elevation="2dp"
             android:padding="10dp"
             android:background="@color/buttonColor"
+
             android:fontFamily="@font/montserrat_bold"
+            android:padding="10dp"
+            android:textSize="60sp"
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -93,10 +117,10 @@
             android:layout_marginLeft="2dp"
             android:background="@color/buttonColor"
             android:elevation="2dp"
-            android:textStyle="bold"
             android:fontFamily="@font/montserrat_bold"
             android:padding="10dp"
             android:textSize="60sp"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@+id/button_00"
             app:layout_constraintStart_toEndOf="@+id/button_00"
             app:layout_constraintTop_toTopOf="@+id/button_00" />
@@ -111,10 +135,10 @@
             android:layout_marginRight="32dp"
             android:background="@color/buttonColor"
             android:elevation="2dp"
-            android:textStyle="bold"
             android:fontFamily="@font/montserrat_bold"
             android:padding="10dp"
             android:textSize="60sp"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@+id/button_01"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/button_01"
@@ -125,12 +149,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
+
+            android:background="#f0f0f0"
+            android:elevation="2dp"
+
             android:background="@color/buttonColor"
+
             android:fontFamily="@font/montserrat_bold"
             android:padding="10dp"
-            android:textStyle="bold"
-            android:elevation="2dp"
             android:textSize="60sp"
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@+id/button_00"
             app:layout_constraintTop_toBottomOf="@+id/button_00" />
 
@@ -138,12 +166,20 @@
             android:id="@+id/button_11"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+
+            android:background="#f0f0f0"
+            android:elevation="2dp"
+
             android:textSize="60sp"
             android:padding="10dp"
             android:elevation="2dp"
             android:textStyle="bold"
             android:background="@color/buttonColor"
+
             android:fontFamily="@font/montserrat_bold"
+            android:padding="10dp"
+            android:textSize="60sp"
+            android:textStyle="bold"
             app:layout_constraintEnd_toStartOf="@+id/button_12"
             app:layout_constraintStart_toEndOf="@+id/button_10"
             app:layout_constraintTop_toTopOf="@+id/button_10" />
@@ -152,11 +188,17 @@
             android:id="@+id/button_12"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textSize="60sp"
+
+            android:background="#f0f0f0"
+   android:textSize="60sp"
             android:padding="10dp"
             android:textStyle="bold"
             android:background="@color/buttonColor"
+
             android:fontFamily="@font/montserrat_bold"
+            android:padding="10dp"
+            android:textSize="60sp"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@+id/button_11"
             app:layout_constraintEnd_toEndOf="@+id/button_02"
             app:layout_constraintTop_toTopOf="@+id/button_11" />
@@ -166,12 +208,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
+
+            android:background="#f0f0f0"
+            android:elevation="2dp"
+
             android:background="@color/buttonColor"
+
             android:fontFamily="@font/montserrat_bold"
             android:padding="10dp"
-            android:elevation="2dp"
-            android:textStyle="bold"
             android:textSize="60sp"
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@+id/button_10"
             app:layout_constraintTop_toBottomOf="@+id/button_10" />
 
@@ -179,12 +225,20 @@
             android:id="@+id/button_21"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+
+            android:background="#f0f0f0"
+            android:elevation="2dp"
+
             android:textSize="60sp"
             android:padding="10dp"
             android:elevation="2dp"
             android:textStyle="bold"
             android:background="@color/buttonColor"
+
             android:fontFamily="@font/montserrat_bold"
+            android:padding="10dp"
+            android:textSize="60sp"
+            android:textStyle="bold"
             app:layout_constraintEnd_toStartOf="@+id/button_22"
             app:layout_constraintStart_toEndOf="@+id/button_20"
             app:layout_constraintTop_toTopOf="@+id/button_20" />
@@ -193,12 +247,20 @@
             android:id="@+id/button_22"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+
+            android:background="#f0f0f0"
+            android:elevation="2dp"
+
             android:textSize="60sp"
             android:padding="10dp"
             android:textStyle="bold"
             android:elevation="2dp"
             android:background="@color/buttonColor"
+
             android:fontFamily="@font/montserrat_bold"
+            android:padding="10dp"
+            android:textSize="60sp"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@+id/button_21"
             app:layout_constraintEnd_toEndOf="@+id/button_12"
             app:layout_constraintTop_toTopOf="@+id/button_21" />
@@ -215,6 +277,7 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent">
 
+
         <TextView
             android:id="@+id/textView2"
             android:layout_width="wrap_content"
@@ -229,6 +292,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
 
         <ImageButton
             android:id="@+id/image_button"
@@ -247,6 +311,35 @@
             app:layout_constraintTop_toTopOf="parent">
 
         </ImageButton>
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:fontFamily="@font/montserrat_bold"
+            android:text="Player Two"
+            android:textColor="#f0f0f0"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/addPlayer2Name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:text="Change name"
+            android:textSize="12sp"
+            android:background="#D6E6EA"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/textView2"
+            app:layout_constraintTop_toTopOf="parent" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
