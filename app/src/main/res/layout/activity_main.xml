@@ -10,8 +10,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout3"
         android:layout_width="0dp"
-        android:layout_height="70dp"
-        android:background="#79CADC"
+        android:layout_height="wrap_content"
+        android:background="@color/playerOneColor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -37,6 +37,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
             android:fontFamily="@font/montserrat_bold"
+
             android:text="Player One"
             android:textColor="#4A6884"
             android:textSize="20sp"
@@ -91,8 +92,16 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
             android:layout_marginLeft="32dp"
+
             android:background="#f0f0f0"
             android:elevation="2dp"
+
+            android:textSize="60sp"
+            android:textStyle="bold"
+            android:elevation="2dp"
+            android:padding="10dp"
+            android:background="@color/buttonColor"
+
             android:fontFamily="@font/montserrat_bold"
             android:padding="10dp"
             android:textSize="60sp"
@@ -106,7 +115,7 @@
             android:layout_height="0dp"
             android:layout_marginStart="2dp"
             android:layout_marginLeft="2dp"
-            android:background="#f0f0f0"
+            android:background="@color/buttonColor"
             android:elevation="2dp"
             android:fontFamily="@font/montserrat_bold"
             android:padding="10dp"
@@ -124,7 +133,7 @@
             android:layout_marginLeft="2dp"
             android:layout_marginEnd="32dp"
             android:layout_marginRight="32dp"
-            android:background="#f0f0f0"
+            android:background="@color/buttonColor"
             android:elevation="2dp"
             android:fontFamily="@font/montserrat_bold"
             android:padding="10dp"
@@ -140,8 +149,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
+
             android:background="#f0f0f0"
             android:elevation="2dp"
+
+            android:background="@color/buttonColor"
+
             android:fontFamily="@font/montserrat_bold"
             android:padding="10dp"
             android:textSize="60sp"
@@ -153,8 +166,16 @@
             android:id="@+id/button_11"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+
             android:background="#f0f0f0"
             android:elevation="2dp"
+
+            android:textSize="60sp"
+            android:padding="10dp"
+            android:elevation="2dp"
+            android:textStyle="bold"
+            android:background="@color/buttonColor"
+
             android:fontFamily="@font/montserrat_bold"
             android:padding="10dp"
             android:textSize="60sp"
@@ -167,7 +188,13 @@
             android:id="@+id/button_12"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+
             android:background="#f0f0f0"
+   android:textSize="60sp"
+            android:padding="10dp"
+            android:textStyle="bold"
+            android:background="@color/buttonColor"
+
             android:fontFamily="@font/montserrat_bold"
             android:padding="10dp"
             android:textSize="60sp"
@@ -181,8 +208,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
+
             android:background="#f0f0f0"
             android:elevation="2dp"
+
+            android:background="@color/buttonColor"
+
             android:fontFamily="@font/montserrat_bold"
             android:padding="10dp"
             android:textSize="60sp"
@@ -194,8 +225,16 @@
             android:id="@+id/button_21"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+
             android:background="#f0f0f0"
             android:elevation="2dp"
+
+            android:textSize="60sp"
+            android:padding="10dp"
+            android:elevation="2dp"
+            android:textStyle="bold"
+            android:background="@color/buttonColor"
+
             android:fontFamily="@font/montserrat_bold"
             android:padding="10dp"
             android:textSize="60sp"
@@ -208,8 +247,16 @@
             android:id="@+id/button_22"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+
             android:background="#f0f0f0"
             android:elevation="2dp"
+
+            android:textSize="60sp"
+            android:padding="10dp"
+            android:textStyle="bold"
+            android:elevation="2dp"
+            android:background="@color/buttonColor"
+
             android:fontFamily="@font/montserrat_bold"
             android:padding="10dp"
             android:textSize="60sp"
@@ -223,12 +270,29 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout2"
         android:layout_width="0dp"
-        android:layout_height="70dp"
-        android:background="#3A98D4"
+        android:layout_height="wrap_content"
+        android:background="@color/playerTwoColor"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent">
+
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:fontFamily="@font/montserrat_bold"
+            android:text="Player Two - 0"
+            android:textColor="@color/playerTwoTextColor"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
 
         <ImageButton
             android:id="@+id/image_button"

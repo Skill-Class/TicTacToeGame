@@ -2,10 +2,16 @@ package com.example.tictactoe;
 
 import android.app.Activity;
 import android.content.Intent;
+
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.Gravity;
+
+import android.media.AudioManager;
+import android.media.SoundPool;
+import android.os.Bundle;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,12 +30,9 @@ import android.widget.Toast;
 import androidx.annotation.DrawableRes;
 
 import androidx.appcompat.app.AppCompatActivity;
-import android.widget.Chronometer;
-import android.os.CountDownTimer;
+import androidx.appcompat.app.AppCompatDelegate;
 
-import java.util.Locale;
-import java.util.Timer;
-import java.util.TimerTask;
+import android.os.CountDownTimer;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -70,9 +73,20 @@ public class MainActivity extends AppCompatActivity {
     private String player1Symbol = "X";
     private String player2Symbol = "O";
 
+    private SoundPool soundPool;
+    private int victoryStreamId;
+    private int drawStreamId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if (ThemeInitializer.getInstance().isNightModeEnabled(getApplicationContext())) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }
+
         flip = AnimationUtils.loadAnimation(this, R.anim.rotate);
         clear = AnimationUtils.loadAnimation(this, R.anim.clear);
         setContentView(R.layout.activity_main);
@@ -113,6 +127,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+
     /**
      * Pops up a window with editText to enter the name and hitting close will update the name
      */
@@ -128,6 +143,13 @@ public class MainActivity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= 21) {
             mPopupWindow.setElevation(5.0f);
         }
+
+        soundPool = new SoundPool(2, AudioManager.STREAM_MUSIC, 0);
+        victoryStreamId = soundPool.load(this, R.raw.victory, 0);
+        drawStreamId = soundPool.load(this, R.raw.draw, 0);
+
+      //  timerr.start();
+
 
         ImageButton closeButton = customView.findViewById(R.id.ib_close);
         playerNameEditText = customView.findViewById(R.id.playerName);
@@ -149,7 +171,14 @@ public class MainActivity extends AppCompatActivity {
             mPopupWindow.dismiss();
         });
 
+
         mPopupWindow.showAtLocation(addPlayer1Name, Gravity.CENTER, 0, 0);
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        countDownTimer.cancel();
+        soundPool.release();
     }
 
     private void buttonPressed(View view) {
@@ -162,11 +191,11 @@ public class MainActivity extends AppCompatActivity {
         if (player1Turn) {
             ((Button) view).setText(player1Symbol);
             // ((Button) view).setTextColor(R.color.XColor);
-            ((Button) view).setTextColor(Color.parseColor("#3A98D4"));
+            ((Button) view).setTextColor(getResources().getColor(R.color.XColor));
         } else {
             ((Button) view).setText(player2Symbol);
             // ((Button) view).setTextColor(R.color.OColor);
-            ((Button) view).setTextColor(Color.parseColor("#79CADC"));
+            ((Button) view).setTextColor(getResources().getColor(R.color.OColor));
         }
 
         roundCount++;
@@ -245,10 +274,14 @@ public class MainActivity extends AppCompatActivity {
     private void player1Wins() {
         player1Points++;
         showToastMessage("Player one won", R.drawable.thumbs_up);
+
         updatePointsText();
         resetBoard();
        //  countDownTimer.cancel();
        // countDownTimer.start();
+
+        onPlayerVictory();
+
       //  timer.cancel();
       //  timer.purge();
       //  time = 0;
@@ -258,25 +291,36 @@ public class MainActivity extends AppCompatActivity {
     private void player2Wins() {
         player2Points++;
         showToastMessage("Player two won", R.drawable.thumbs_up);
+
         updatePointsText();
         resetBoard();
       //  countDownTimer.cancel();
       //  countDownTimer.start();
+
+        onPlayerVictory();
+
      //   timer.cancel();
      //   timer.purge();
       //  time = 0;
        // textViewTimer.setText(String.valueOf(time));
     }
 
+    private void onPlayerVictory() {
+        soundPool.play(victoryStreamId, 1f, 1f, 0, 0, 0f);
+        updatePointsText();
+        resetBoard();
+        countDownTimer.cancel();
+        countDownTimer.start();
+    }
+
     private void draw() {
+        soundPool.play(drawStreamId, 1f, 1f, 0, 0, 0f);
         showToastMessage("Draw", R.drawable.draw);
         resetBoard();
         countDownTimer.cancel();
         countDownTimer.start();
      //   timer.cancel();
      //   timer.purge();
-
-
     }
 
     private void updatePointsText() {
@@ -312,4 +356,6 @@ public class MainActivity extends AppCompatActivity {
         toast.setView(layout);
         toast.show();
     }
+
+
 }
