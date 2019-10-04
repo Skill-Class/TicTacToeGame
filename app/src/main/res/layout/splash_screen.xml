@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/splash_screen_gradient">
+
+
+<!--    Current Icon is just Temporary, replace icon-->
+    <ImageView
+        android:id="@+id/splash_Screen_icon"
+        android:layout_width="135dp"
+        android:layout_height="135dp"
+        android:src="@drawable/tic_tac_toe_splash_icon"
+        android:layout_centerInParent="true">
+    </ImageView>
+    <TextView
+        android:id="@+id/splash_screen_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/splash_Screen_icon"
+        android:layout_centerHorizontal="true"
+        android:text="Tic Tac Toe"
+        android:fontFamily="@font/montserrat_bold"
+        android:textColor="#ffffff"
+        android:textSize="25sp">
+    </TextView>
+
+
+
+</RelativeLayout>
