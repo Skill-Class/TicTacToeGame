@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    tools:context=".SplashActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.5"
+        android:background="#ff0000" >
+
+    <pl.droidsonroids.gif.GifImageView
+        android:id="@+id/tictactoe_logo"
+        android:layout_width="456dp"
+        android:layout_height="971dp"
+        android:layout_centerInParent="true"
+        android:gravity="center_vertical"
+        android:background="#00FDFAFA"
+        android:scaleType="fitXY"
+        android:src="@drawable/tictactoe_splash"
+        />
+
+    </RelativeLayout>
+</LinearLayout>
