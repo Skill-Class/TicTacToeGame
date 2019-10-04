@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#2E8B57</color>
+    <color name="colorPrimaryDark">#2E8B57</color>
+    <color name="colorAccent">#2E8B57</color>
+    <color name="textColor">#ff8222</color>
+    <color name="playerOneColor">#202020</color>
+    <color name="playerTwoColor">#202020</color>
+    <color name="backgroundColor">#404040</color>
+    <color name="playerOneTextColor">#f0f0f0</color>
+    <color name="playerTwoTextColor">#f0f0f0</color>
+    <color name="buttonColor">#202020</color>
+    <color name="timerColor">#2E8B57</color>
+    <color name="XColor">#2E8B57</color>
+    <color name="OColor">#2E8B57</color>
+</resources>

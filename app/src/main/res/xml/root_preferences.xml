@@ -1,0 +1,13 @@
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.preference.PreferenceCategory
+        app:title="Display"
+        app:iconSpaceReserved="false">
+        <androidx.preference.SwitchPreference
+            app:key="night_mode_preference"
+            app:summary="Switch Theme"
+            app:title="Night Mode"
+            app:iconSpaceReserved="false"/>
+    </androidx.preference.PreferenceCategory>
+
+</PreferenceScreen>
