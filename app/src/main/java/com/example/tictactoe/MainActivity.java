@@ -13,6 +13,9 @@ import android.media.SoundPool;
 import android.os.Bundle;
 
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -29,6 +32,7 @@ import android.widget.Toast;
 
 import androidx.annotation.DrawableRes;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
@@ -130,6 +134,29 @@ public class MainActivity extends AppCompatActivity {
         victoryStreamId = soundPool.load(this, R.raw.victory, 0);
         drawStreamId = soundPool.load(this, R.raw.draw, 0);
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_settings) {
+            Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+            startActivity(intent);
+            return true;
+        }
+        if (id == R.id.action_exit) {
+            finish();
+            moveTaskToBack(true);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 
