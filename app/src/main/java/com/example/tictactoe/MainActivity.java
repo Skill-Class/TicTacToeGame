@@ -189,10 +189,10 @@ public class MainActivity extends AppCompatActivity {
             if (!playerName.equals("")) {
                 if (i == 1) {
                     player1 = playerName;
-                   // updatePointsText();
+                    updatePointsText();
                 } else {
                     player2 = playerName;
-                   // updatePointsText();
+                    updatePointsText();
                 }
             }
             mPopupWindow.dismiss();
