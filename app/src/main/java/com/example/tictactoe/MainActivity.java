@@ -13,6 +13,9 @@ import android.media.SoundPool;
 import android.os.Bundle;
 
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -29,6 +32,7 @@ import android.widget.Toast;
 
 import androidx.annotation.DrawableRes;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
@@ -53,15 +57,15 @@ public class MainActivity extends AppCompatActivity {
     private int player1Points;
     private int player2Points;
 
-  //  private Timer timer;
- //   private int time = 0;
+    //  private Timer timer;
+    //   private int time = 0;
 
-    private CountDownTimer countDownTimer;
+    //private CountDownTimer countDownTimer;
 
     private TextView textViewPlayer1;
     private TextView textViewPlayer2;
     private TextView timerView;
- //   private Chronometer timerr;
+    //   private Chronometer timerr;
     private Animation flip, clear;
     private PopupWindow mPopupWindow;
     private Button addPlayer1Name, addPlayer2Name, okButton;
@@ -92,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         final String chosenPlayer1Symbol = getIntent().getStringExtra(EXTRA_PLAYER_1_SYMBOL);
-        if("O".equals(chosenPlayer1Symbol)) {
+        if ("O".equals(chosenPlayer1Symbol)) {
             player1Symbol = "O";
             player2Symbol = "X";
         }
@@ -103,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
         addPlayer2Name = findViewById(R.id.addPlayer2Name);
         updatePointsText();
 
-     //   timerr = findViewById(R.id.timerID);
+        //   timerr = findViewById(R.id.timerID);
         timerView = findViewById(R.id.timerID);
 
         for (int i = 0; i < 3; i++) {
@@ -125,6 +129,34 @@ public class MainActivity extends AppCompatActivity {
         addPlayer2Name.setOnClickListener(view -> {
             getPlayerName(2);
         });
+
+        soundPool = new SoundPool(2, AudioManager.STREAM_MUSIC, 0);
+        victoryStreamId = soundPool.load(this, R.raw.victory, 0);
+        drawStreamId = soundPool.load(this, R.raw.draw, 0);
+
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_settings) {
+            Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+            startActivity(intent);
+            return true;
+        }
+        if (id == R.id.action_exit) {
+            finish();
+            moveTaskToBack(true);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 
@@ -144,12 +176,7 @@ public class MainActivity extends AppCompatActivity {
             mPopupWindow.setElevation(5.0f);
         }
 
-        soundPool = new SoundPool(2, AudioManager.STREAM_MUSIC, 0);
-        victoryStreamId = soundPool.load(this, R.raw.victory, 0);
-        drawStreamId = soundPool.load(this, R.raw.draw, 0);
-
-      //  timerr.start();
-
+        //  timerr.start();
 
         ImageButton closeButton = customView.findViewById(R.id.ib_close);
         playerNameEditText = customView.findViewById(R.id.playerName);
@@ -173,11 +200,12 @@ public class MainActivity extends AppCompatActivity {
 
 
         mPopupWindow.showAtLocation(addPlayer1Name, Gravity.CENTER, 0, 0);
+    }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        countDownTimer.cancel();
+        //countDownTimer.cancel();
         soundPool.release();
     }
 
@@ -222,16 +250,16 @@ public class MainActivity extends AppCompatActivity {
         player2Points = 0;
         updatePointsText();
         resetBoard();
-        countDownTimer.cancel();
-        countDownTimer.start();
+        //countDownTimer.cancel();
+        //countDownTimer.start();
 
 
-      //  timerr.setBase(SystemClock.elapsedRealtime());
+        //  timerr.setBase(SystemClock.elapsedRealtime());
 
-      //  timer.cancel();
-      //  timer.purge();
-      //  time = 0;
-       
+        //  timer.cancel();
+        //  timer.purge();
+        //  time = 0;
+
 
     }
 
@@ -277,15 +305,15 @@ public class MainActivity extends AppCompatActivity {
 
         updatePointsText();
         resetBoard();
-       //  countDownTimer.cancel();
-       // countDownTimer.start();
+        //  countDownTimer.cancel();
+        // countDownTimer.start();
 
         onPlayerVictory();
 
-      //  timer.cancel();
-      //  timer.purge();
-      //  time = 0;
-      //  textViewTimer.setText(String.valueOf(time));
+        //  timer.cancel();
+        //  timer.purge();
+        //  time = 0;
+        //  textViewTimer.setText(String.valueOf(time));
     }
 
     private void player2Wins() {
@@ -294,38 +322,38 @@ public class MainActivity extends AppCompatActivity {
 
         updatePointsText();
         resetBoard();
-      //  countDownTimer.cancel();
-      //  countDownTimer.start();
+        //  countDownTimer.cancel();
+        //  countDownTimer.start();
 
         onPlayerVictory();
 
-     //   timer.cancel();
-     //   timer.purge();
-      //  time = 0;
-       // textViewTimer.setText(String.valueOf(time));
+        //   timer.cancel();
+        //   timer.purge();
+        //  time = 0;
+        // textViewTimer.setText(String.valueOf(time));
     }
 
     private void onPlayerVictory() {
         soundPool.play(victoryStreamId, 1f, 1f, 0, 0, 0f);
         updatePointsText();
         resetBoard();
-        countDownTimer.cancel();
-        countDownTimer.start();
+        //countDownTimer.cancel();
+        //countDownTimer.start();
     }
 
     private void draw() {
         soundPool.play(drawStreamId, 1f, 1f, 0, 0, 0f);
         showToastMessage("Draw", R.drawable.draw);
         resetBoard();
-        countDownTimer.cancel();
-        countDownTimer.start();
-     //   timer.cancel();
-     //   timer.purge();
+        //countDownTimer.cancel();
+        //countDownTimer.start();
+        //   timer.cancel();
+        //   timer.purge();
     }
 
     private void updatePointsText() {
         textViewPlayer1.setText(player1 + " - " + player1Points);
-        textViewPlayer2.setText(player2 + " - " +player2Points);
+        textViewPlayer2.setText(player2 + " - " + player2Points);
     }
 
     private void resetBoard() {

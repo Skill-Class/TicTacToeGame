@@ -48,6 +48,11 @@ public class SymbolChooserActivity extends AppCompatActivity {
             startActivity(intent);
             return true;
         }
+        if (id == R.id.action_exit) {
+            finish();
+            moveTaskToBack(true);
+            return true;
+        }
         return super.onOptionsItemSelected(item);
     }
 }
