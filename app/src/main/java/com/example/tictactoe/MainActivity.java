@@ -105,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
         textViewPlayer2 = findViewById(R.id.textView2);
         addPlayer1Name = findViewById(R.id.addName);
         addPlayer2Name = findViewById(R.id.addPlayer2Name);
-        updatePointsText();
+       // updatePointsText();
 
         //   timerr = findViewById(R.id.timerID);
         timerView = findViewById(R.id.timerID);
@@ -189,10 +189,10 @@ public class MainActivity extends AppCompatActivity {
             if (!playerName.equals("")) {
                 if (i == 1) {
                     player1 = playerName;
-                    updatePointsText();
+                   // updatePointsText();
                 } else {
                     player2 = playerName;
-                    updatePointsText();
+                   // updatePointsText();
                 }
             }
             mPopupWindow.dismiss();
