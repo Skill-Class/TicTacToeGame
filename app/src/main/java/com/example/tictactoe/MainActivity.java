@@ -1,9 +1,16 @@
 package com.example.tictactoe;
 
-import android.graphics.Color;
-import android.os.Bundle;
+import android.app.Activity;
+import android.content.Intent;
 
-import android.os.SystemClock;
+import android.graphics.Color;
+import android.os.Build;
+import android.os.Bundle;
+import android.view.Gravity;
+
+import android.media.AudioManager;
+import android.media.SoundPool;
+import android.os.Bundle;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,8 +18,11 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.PopupWindow;
+import android.widget.RelativeLayout.LayoutParams;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,13 +30,19 @@ import android.widget.Toast;
 import androidx.annotation.DrawableRes;
 
 import androidx.appcompat.app.AppCompatActivity;
-import android.widget.Chronometer;
+import androidx.appcompat.app.AppCompatDelegate;
 
-import java.util.Locale;
-import java.util.Timer;
-import java.util.TimerTask;
+import android.os.CountDownTimer;
 
 public class MainActivity extends AppCompatActivity {
+
+    private static final String EXTRA_PLAYER_1_SYMBOL = "Player1Symbol";
+
+    public static void start(final Activity activity, final String player1Symbol) {
+        final Intent intent = new Intent(activity, MainActivity.class);
+        intent.putExtra(EXTRA_PLAYER_1_SYMBOL, player1Symbol);
+        activity.startActivity(intent);
+    }
 
     private Button[][] buttons = new Button[3][3];
 
@@ -40,23 +56,55 @@ public class MainActivity extends AppCompatActivity {
   //  private Timer timer;
  //   private int time = 0;
 
+    private CountDownTimer countDownTimer;
 
     private TextView textViewPlayer1;
     private TextView textViewPlayer2;
+    private TextView timerView;
  //   private Chronometer timerr;
     private Animation flip, clear;
+    private PopupWindow mPopupWindow;
+    private Button addPlayer1Name, addPlayer2Name, okButton;
+    private EditText playerNameEditText;
+    String playerName = "";
+    String player1 = "Player One", player2 = "Player Two";
+
+
+    private String player1Symbol = "X";
+    private String player2Symbol = "O";
+
+    private SoundPool soundPool;
+    private int victoryStreamId;
+    private int drawStreamId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if (ThemeInitializer.getInstance().isNightModeEnabled(getApplicationContext())) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }
+
         flip = AnimationUtils.loadAnimation(this, R.anim.rotate);
         clear = AnimationUtils.loadAnimation(this, R.anim.clear);
         setContentView(R.layout.activity_main);
 
+        final String chosenPlayer1Symbol = getIntent().getStringExtra(EXTRA_PLAYER_1_SYMBOL);
+        if("O".equals(chosenPlayer1Symbol)) {
+            player1Symbol = "O";
+            player2Symbol = "X";
+        }
+
         textViewPlayer1 = findViewById(R.id.textView);
         textViewPlayer2 = findViewById(R.id.textView2);
+        addPlayer1Name = findViewById(R.id.addName);
+        addPlayer2Name = findViewById(R.id.addPlayer2Name);
+        updatePointsText();
 
      //   timerr = findViewById(R.id.timerID);
+        timerView = findViewById(R.id.timerID);
 
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
@@ -71,8 +119,66 @@ public class MainActivity extends AppCompatActivity {
 
         ImageButton buttonReset = findViewById(R.id.image_button);
         buttonReset.setOnClickListener(v -> resetGame());
+        addPlayer1Name.setOnClickListener(view -> {
+            getPlayerName(1);
+        });
+        addPlayer2Name.setOnClickListener(view -> {
+            getPlayerName(2);
+        });
+    }
+
+
+    /**
+     * Pops up a window with editText to enter the name and hitting close will update the name
+     */
+    private void getPlayerName(int i) {
+        LayoutInflater inflater = LayoutInflater.from(getApplicationContext());
+        View customView = inflater.inflate(R.layout.add_player_name, null);
+        mPopupWindow = new PopupWindow(
+                customView,
+                LayoutParams.WRAP_CONTENT,
+                LayoutParams.WRAP_CONTENT,
+                true
+        );
+        if (Build.VERSION.SDK_INT >= 21) {
+            mPopupWindow.setElevation(5.0f);
+        }
+
+        soundPool = new SoundPool(2, AudioManager.STREAM_MUSIC, 0);
+        victoryStreamId = soundPool.load(this, R.raw.victory, 0);
+        drawStreamId = soundPool.load(this, R.raw.draw, 0);
 
       //  timerr.start();
+
+
+        ImageButton closeButton = customView.findViewById(R.id.ib_close);
+        playerNameEditText = customView.findViewById(R.id.playerName);
+
+        closeButton.setOnClickListener(view1 -> {
+            // Dismiss the popup window
+            if (playerNameEditText != null) {
+                playerName = playerNameEditText.getText().toString();
+            }
+            if (!playerName.equals("")) {
+                if (i == 1) {
+                    player1 = playerName;
+                    updatePointsText();
+                } else {
+                    player2 = playerName;
+                    updatePointsText();
+                }
+            }
+            mPopupWindow.dismiss();
+        });
+
+
+        mPopupWindow.showAtLocation(addPlayer1Name, Gravity.CENTER, 0, 0);
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        countDownTimer.cancel();
+        soundPool.release();
     }
 
     private void buttonPressed(View view) {
@@ -83,13 +189,13 @@ public class MainActivity extends AppCompatActivity {
         }
         view.startAnimation(flip);
         if (player1Turn) {
-            ((Button) view).setText("X");
+            ((Button) view).setText(player1Symbol);
             // ((Button) view).setTextColor(R.color.XColor);
-            ((Button) view).setTextColor(Color.parseColor("#3A98D4"));
+            ((Button) view).setTextColor(getResources().getColor(R.color.XColor));
         } else {
-            ((Button) view).setText("O");
+            ((Button) view).setText(player2Symbol);
             // ((Button) view).setTextColor(R.color.OColor);
-            ((Button) view).setTextColor(Color.parseColor("#79CADC"));
+            ((Button) view).setTextColor(getResources().getColor(R.color.OColor));
         }
 
         roundCount++;
@@ -116,6 +222,8 @@ public class MainActivity extends AppCompatActivity {
         player2Points = 0;
         updatePointsText();
         resetBoard();
+        countDownTimer.cancel();
+        countDownTimer.start();
 
 
       //  timerr.setBase(SystemClock.elapsedRealtime());
@@ -126,7 +234,6 @@ public class MainActivity extends AppCompatActivity {
        
 
     }
-
 
     private boolean checkForWin() {
         String[][] field = new String[3][3];
@@ -167,8 +274,14 @@ public class MainActivity extends AppCompatActivity {
     private void player1Wins() {
         player1Points++;
         showToastMessage("Player one won", R.drawable.thumbs_up);
+
         updatePointsText();
         resetBoard();
+       //  countDownTimer.cancel();
+       // countDownTimer.start();
+
+        onPlayerVictory();
+
       //  timer.cancel();
       //  timer.purge();
       //  time = 0;
@@ -178,26 +291,41 @@ public class MainActivity extends AppCompatActivity {
     private void player2Wins() {
         player2Points++;
         showToastMessage("Player two won", R.drawable.thumbs_up);
+
         updatePointsText();
         resetBoard();
+      //  countDownTimer.cancel();
+      //  countDownTimer.start();
+
+        onPlayerVictory();
+
      //   timer.cancel();
      //   timer.purge();
       //  time = 0;
        // textViewTimer.setText(String.valueOf(time));
     }
 
+    private void onPlayerVictory() {
+        soundPool.play(victoryStreamId, 1f, 1f, 0, 0, 0f);
+        updatePointsText();
+        resetBoard();
+        countDownTimer.cancel();
+        countDownTimer.start();
+    }
+
     private void draw() {
+        soundPool.play(drawStreamId, 1f, 1f, 0, 0, 0f);
         showToastMessage("Draw", R.drawable.draw);
         resetBoard();
+        countDownTimer.cancel();
+        countDownTimer.start();
      //   timer.cancel();
      //   timer.purge();
-
-
     }
 
     private void updatePointsText() {
-        textViewPlayer1.setText("Player One - " + player1Points);
-        textViewPlayer2.setText("Player Two - " + player2Points);
+        textViewPlayer1.setText(player1 + " - " + player1Points);
+        textViewPlayer2.setText(player2 + " - " +player2Points);
     }
 
     private void resetBoard() {
@@ -227,7 +355,7 @@ public class MainActivity extends AppCompatActivity {
         toast.setDuration(Toast.LENGTH_SHORT);
         toast.setView(layout);
         toast.show();
-
-
     }
+
+
 }
