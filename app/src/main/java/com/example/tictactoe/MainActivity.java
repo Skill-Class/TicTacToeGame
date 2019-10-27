@@ -62,6 +62,10 @@ public class MainActivity extends AppCompatActivity {
     private String player1Symbol = "X";
     private String player2Symbol = "O";
 
+    private String player1Colour = "#79CADC";   //lighter blue
+    private String player2Colour = "#3A98D4"; //darker blue
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -128,11 +132,11 @@ public class MainActivity extends AppCompatActivity {
         if (player1Turn) {
             ((Button) view).setText(player1Symbol);
             // ((Button) view).setTextColor(R.color.XColor);
-            ((Button) view).setTextColor(Color.parseColor("#3A98D4"));
+            ((Button) view).setTextColor(Color.parseColor(player1Colour));
         } else {
             ((Button) view).setText(player2Symbol);
             // ((Button) view).setTextColor(R.color.OColor);
-            ((Button) view).setTextColor(Color.parseColor("#79CADC"));
+            ((Button) view).setTextColor(Color.parseColor(player2Colour));
         }
 
         roundCount++;

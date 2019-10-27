@@ -16,6 +16,14 @@ public class SymbolChooserActivity extends AppCompatActivity {
         findViewById(R.id.button_X).setOnClickListener(v -> onSymbolChosen("X"));
     }
 
+    /**
+     * Disables the back button
+     */
+    @Override
+    public void onBackPressed() {
+        return;
+    }
+
     private void onSymbolChosen(final String symbol) {
         MainActivity.start(this, symbol);
     }
