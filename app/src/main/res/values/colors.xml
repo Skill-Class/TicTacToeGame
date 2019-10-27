@@ -2,8 +2,17 @@
 <resources>
     <color name="colorPrimary">#4A6884</color>
     <color name="colorPrimaryDark">#4A6884</color>
-    <color name="colorAccent">#D81B60</color>
+    <color name="colorAccent">#4A6884</color>
     <color name="XColor">#3A98D4</color>
     <color name="OColor">#79CADC</color>
     <color name="backgroundColor">#FFD6E6EA</color>
+    <color name="green">#2E8B57</color>
+    <color name="greenDark">#2E8B57</color>
+    <color name="textColor">#000000</color>
+    <color name="playerOneColor">#79CADC</color>
+    <color name="playerTwoColor">#3A98D4</color>
+    <color name="playerOneTextColor">#4A6884</color>
+    <color name="playerTwoTextColor">#f0f0f0</color>
+    <color name="buttonColor">#f0f0f0</color>
+    <color name="timerColor">#91A2AB</color>
 </resources>
