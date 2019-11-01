@@ -22,9 +22,11 @@
 
 
 
+
         <activity
             android:name=".SettingsActivity"
             android:label="@string/title_activity_settings" />
+
 
         <meta-data
             android:name="preloaded_fonts"
