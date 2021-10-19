@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
     private SoundPool soundPool;
     private int victoryStreamId;
     private int drawStreamId;
-  
+
     private String player1Colour = "#79CADC";   //lighter blue
     private String player2Colour = "#3A98D4"; //darker blue
 
@@ -110,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
         textViewPlayer2 = findViewById(R.id.textView2);
         addPlayer1Name = findViewById(R.id.addName);
         addPlayer2Name = findViewById(R.id.addPlayer2Name);
-       // updatePointsText();
+        // updatePointsText();
 
         //   timerr = findViewById(R.id.timerID);
         timerView = findViewById(R.id.timerID);
